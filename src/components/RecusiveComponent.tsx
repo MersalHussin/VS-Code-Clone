@@ -2,10 +2,10 @@
 import { useState } from "react";
 import type { IFileTree } from "../interfaces";
 // import { svgStyles } from "../styles";
-import FolderComponent from "./FolderComponent";
+// import FolderComponent from "./FolderComponent";
 // import File from "./SVG/File";
 
-import RenderFileIcon from "./SVG/RenderFileIcon";
+import RenderFileIcon from "./RenderFileIcon";
 import { ArrowDown, ArrowRight } from "lucide-react";
 
 interface IProps{
@@ -29,7 +29,9 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
        <div className="flex justify-center items-center">
         {isOpen ? <ArrowDown/> :<ArrowRight />} 
        {/* <RenderFileIcon filename={fileTree.name}/> */}
-       <FolderComponent foldername={fileTree.name}/>
+       <RenderFileIcon filename={fileTree.name} isOpenFolder={isOpen} isfolder={true}/>
+       <span>{fileTree.name}</span>
+       {/* <FolderComponent foldername={fileTree.name}/> */}
        </div>
        :
        <>
