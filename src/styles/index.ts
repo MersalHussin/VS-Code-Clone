@@ -1,1 +1,1 @@
-export const svgStyles = {width:25, height:25}
+export const svgStyles = {width:20, height:20}
