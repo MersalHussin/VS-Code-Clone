@@ -11,8 +11,9 @@ export const fileTree : IFileTree = {
           {name:".vite",isFolder:true, children:[
               {name:"Mersal.tsx", isFolder:false}
           ]},
-          {name:"react.js",isFolder:false},
-          {name:"HBD.js",isFolder:false}
+          {name:"react.tsx",isFolder:false},
+          {name:"HBD.jsx",isFolder:false},
+          {name:"Button.js",isFolder:false}
         ]
     },
     {
