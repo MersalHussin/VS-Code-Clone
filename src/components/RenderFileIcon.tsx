@@ -4,27 +4,42 @@ interface IProps{
 filename: string
 isOpenFolder?: boolean
 isfolder?: boolean
+}
+
+const extensionIconPath: Record<string,string> = {
+    // Files
+    tsx:"/icons/typescript",
+    ts:"/icons/react_ts",
+    js:"/icons/react",
+    jsx:"/icons/javascript",
+    html:"/icons/html",
+    default_file:"/icons/default",
+    
+    // Folders
+    node_modules:"/icons/folder-node",
+    vscode:"/icons/folder-vscode",
+    public:"/icons/folder-public",
+    src:"/icons/folder-src",
+    components:"/icons/folder-components",
+    default_folder:"/icons/folder-default",
 
 }
 
-
 const RenderFileIcon = ({filename,isOpenFolder,isfolder}: IProps ) => {
     const extension = filename.split('.').pop()
-    if(extension === "ts") return  <IconImage extension={extension} src={`/icons/typescript.svg`}   />
-    if(extension === "tsx") return  <IconImage extension={extension} src={`/icons/react_ts.svg`}   />
-    if(extension === "jsx") return  <IconImage extension={extension} src={`/icons/react.svg`}   />
-    if(extension === "js") return  <IconImage extension={extension} src={`/icons/javascript.svg`}   />
-    // folders
-    if(extension === "node_modules") return  <IconImage extension={extension} src={`/icons/folder-node${isOpenFolder ? "-open":""}.svg`}   /> 
-    if(extension === "public") return  <IconImage extension={extension} src={`/icons/folder-public${isOpenFolder ? "-open":""}.svg`}   /> 
-    if(extension === "src") return  <IconImage extension={extension} src={`/icons/folder-src${isOpenFolder ? "-open":""}.svg`}   /> 
-    if(extension === "components") return  <IconImage extension={extension} src={`/icons/folder-components${isOpenFolder ? "-open":""}.svg`}   /> 
-    if(extension === "vscode-clone") return  <IconImage extension={extension} src={`/icons/folder-vscode${isOpenFolder ? "-open":""}.svg`}   /> 
-    if(isfolder) return  <IconImage extension={extension} src={`/icons/folder-default${isOpenFolder ? "-open":""}.svg`}   /> 
-    return (
-        <IconImage extension={extension} src={`/icons/${extension}.svg`}/>
-        // <File/>
-    );
+    if(extension && Object.prototype.hasOwnProperty.call(extensionIconPath,extension)){
+        const iconPath = isfolder 
+        ? isOpenFolder
+            ? `${extensionIconPath[extension]}-open.svg` 
+            : `${extensionIconPath[extension]}.svg` 
+        : `${extensionIconPath[extension]}.svg` 
+       return <IconImage extension={extension} src={iconPath}/>
+    }else{
+        return isfolder ? isOpenFolder ? <IconImage src={extensionIconPath["default_folder"] + "-open.svg"}/> : <IconImage src={extensionIconPath["default_folder"] + ".svg"}/> :<IconImage extension={extension} src={`/icons/${extension}.svg`}/>
+
+    }
+    return         <IconImage extension={extension} src={`/icons/${extension}.svg`}/>
+
 }
 
 export default RenderFileIcon;
