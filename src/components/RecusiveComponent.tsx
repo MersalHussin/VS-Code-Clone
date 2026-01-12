@@ -7,6 +7,9 @@ import type { IFileTree } from "../interfaces";
 
 import RenderFileIcon from "./RenderFileIcon";
 import { ArrowDown, ArrowRight } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../app/store";
+import { setOpenFiles } from "../app/features/fileTreeSlice";
 
 interface IProps{
 fileTree: IFileTree
@@ -22,6 +25,8 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
     console.log(`${fileTree.name} is Open ${isOpen}`)
   }
   
+  const dispatch = useDispatch()
+  const openedFiles = useSelector((state:RootState)=> state.fileTree.openedFiles)
   return (
     <div className="px-6 py-1" >
       <div className="flex flex-row mt-2 cursor-pointer" onClick={()=> onOpenFolder()} >
@@ -46,7 +51,9 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
           {/* <FileComponent fileName="Index.tsx"/> */}
       {isOpen &&
       fileTree.children?.map((item,idx) => (
-        <RecusiveComponent key={idx} fileTree={item}/>
+        <div onClick={()=> dispatch(setOpenFiles([...openedFiles]), fileTree)}>
+        <RecusiveComponent key={idx} fileTree={item} />
+        </div>
       ))
     }
         {/* <FolderComponent foldername="Components"/> */}
