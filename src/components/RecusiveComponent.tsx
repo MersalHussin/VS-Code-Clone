@@ -26,7 +26,7 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
   }
   
   const dispatch = useDispatch()
-  const openedFiles = useSelector((state:RootState)=> state.fileTree.openedFiles)
+  const {openedFiles} = useSelector((state:RootState)=> state.fileTree)
   return (
     <div className="px-6 py-1" >
       <div className="flex flex-row mt-2 cursor-pointer" onClick={()=> onOpenFolder()} >
@@ -51,8 +51,12 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
           {/* <FileComponent fileName="Index.tsx"/> */}
       {isOpen &&
       fileTree.children?.map((item,idx) => (
-        <div onClick={()=> dispatch(setOpenFiles([...openedFiles]), fileTree)}>
-        <RecusiveComponent key={idx} fileTree={item} />
+        <div key={idx} onClick={()=> {
+          if (!item.isFolder && !openedFiles.find(file => file.id === item.id)) {
+            dispatch(setOpenFiles([...openedFiles, item]))
+          }
+        }}>
+        <RecusiveComponent  fileTree={item} />
         </div>
       ))
     }

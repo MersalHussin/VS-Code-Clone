@@ -31,4 +31,4 @@ const fileTreeSlice = createSlice({
 
 export const  {setOpenFiles} = fileTreeSlice.actions
 
-export default fileTreeSlice;
+export default fileTreeSlice.reducer;
