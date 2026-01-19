@@ -1,19 +1,19 @@
-import type { RootState } from "./app/store";
+import OpendFileBar from "./components/OpendFileBar";
 import RecusiveComponent from "./components/RecusiveComponent";
 import { fileTree } from "./data/fileTree";
-import { useSelector } from "react-redux";
-
 
 function App() {
-  const {openedFiles} = useSelector((state:RootState)=> state.fileTree)
 
-  return (
+return (
     <>
-    <div>
-      <RecusiveComponent fileTree={fileTree} />
-      <ul>
-        {openedFiles.map((file , idx)=> <div key={idx}>{file.name}</div>)}
-      </ul>
+    <div className="flex h-screen">
+
+      <div style={{border:"3px solid white"}} className="w-60 p-2">
+        <RecusiveComponent fileTree={fileTree} />
+      </div>
+      <div className=" flex  flex-1 p-2">
+        <OpendFileBar />
+      </div>
     </div>
     </>
   )
