@@ -1,9 +1,9 @@
 export const extensionIconPath: Record<string,string> = {
     // Files
-    tsx:"/icons/typescript",
-    ts:"/icons/react_ts",
-    js:"/icons/react",
-    jsx:"/icons/javascript",
+    ts:"/icons/typescript",
+    tsx:"/icons/react_ts",
+    js:"/icons/javascript",
+    jsx:"/icons/react",
     html:"/icons/html",
     default_file:"/icons/default",
     

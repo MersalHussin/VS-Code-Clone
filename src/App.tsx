@@ -8,7 +8,7 @@ return (
     <>
     <div className="flex h-screen">
 
-      <div style={{border:"3px solid white"}} className="w-60 p-2">
+      <div style={{border:"3px solid white"}} >
         <RecusiveComponent fileTree={fileTree} />
       </div>
       <div className=" flex  flex-1 p-2">
