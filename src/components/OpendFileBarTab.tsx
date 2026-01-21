@@ -3,8 +3,6 @@ import type { IFileTree } from "../interfaces"
 import RenderFileIcon from "./RenderFileIcon";
 import { setOpendClickedFile, setOpenFiles  } from "../app/features/fileTreeSlice";
 import type { RootState } from "../app/store";
-import { useState } from "react";
-import DropMenu from "./ui/DropMenu";
 
 interface IProps{
 file: IFileTree
@@ -13,8 +11,7 @@ file: IFileTree
 
 
 const OpendFileBarTab = ({file}: IProps ) => {
-  const [postion,setPostion] = useState<{x:number,y:number}>({x:0,y:0})
-  const [showMenu,setShowMenu] = useState<boolean>(false)
+
     const dispatch =   useDispatch();
           const {clickedFile:{activeTabId} ,openedFiles} = useSelector((state:RootState) => state.fileTree)
         //   Handelrs -- Remove
@@ -42,11 +39,7 @@ const OpendFileBarTab = ({file}: IProps ) => {
     }
     return (
       <div  className={`flex justify-start items-start border border-gray-100`} >
-        <li onClick={onclick} onContextMenu={(e) =>{
-          e.preventDefault();
-          setPostion({x:e.clientX,y:e.clientY})
-          setShowMenu(prev => !prev)
-        }} style={{borderTop: activeTabId === id ? "3px solid red" : "0 solid transparent" }} className=" flex rounded-sm  py-2 items-center  transition gap-2 cursor-pointer h-fit px-5 hover:bg-[#64646473]" key={file.id}>
+        <li onClick={onclick}  style={{borderTop: activeTabId === id ? "3px solid red" : "0 solid transparent" }} className=" flex rounded-sm  py-2 items-center  transition gap-2 cursor-pointer h-fit px-5 hover:bg-[#64646473]" key={file.id}>
                 <RenderFileIcon filename={file.name}/>
                  {file.name}
                     <span onClick={(e) =>{
@@ -55,10 +48,7 @@ const OpendFileBarTab = ({file}: IProps ) => {
                     }} className="hover:bg-gray-500 px-2 rounded-lg transition">x</span>
                  </li>
                  
-                {showMenu && 
-                    <DropMenu  postion={postion}/>
-                }
-
+                
         </div>
         
 )}
