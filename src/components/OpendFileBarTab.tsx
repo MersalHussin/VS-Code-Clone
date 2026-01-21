@@ -22,7 +22,7 @@ const OpendFileBarTab = ({file}: IProps ) => {
     }
     return (
         <div className={`flex border border-gray-100`} >
-        <li onClick={onclick} style={{borderTop: activeTabId === id ? "3px solid red" : "3px solid transparent" }} className=" flex rounded-sm  py-2 items-center  transition gap-2 cursor-pointer h-fit px-5 hover:bg-[#64646473]" key={file.id}>
+        <li onClick={onclick} style={{borderTop: activeTabId === id ? "3px solid red" : "0 solid transparent" }} className=" flex rounded-sm  py-2 items-center  transition gap-2 cursor-pointer h-fit px-5 hover:bg-[#64646473]" key={file.id}>
                 <RenderFileIcon filename={file.name}/>
                  {file.name}
                     <span className="hover:bg-gray-500 px-2 rounded-lg transition">x</span>
