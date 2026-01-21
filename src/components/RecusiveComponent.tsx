@@ -52,16 +52,17 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
       {isOpen &&
       fileTree.children?.map((item,idx) => (
         <div key={idx} onClick={()=> {
-          dispatch((setOpendClickedFile({
+          if (!item.isFolder) {
+            dispatch(setOpendClickedFile({
                 filename: item.name, 
                 fileContent: item.content,
                 activeTabId: item.id
-            })))
-          if (!item.isFolder && !openedFiles.find(file => file.id === item.id)) {
-            dispatch(setOpenFiles([...openedFiles, item]))
-                }
+            }))
+            if (!openedFiles.find(file => file.id === item.id)) {
+              dispatch(setOpenFiles([...openedFiles, item]))
+            }
           }
-        }>
+        }}>
         <RecusiveComponent  fileTree={item} />
         </div>
       ))
