@@ -9,7 +9,7 @@ import RenderFileIcon from "./RenderFileIcon";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../app/store";
-import { setOpenFiles } from "../app/features/fileTreeSlice";
+import { setOpenFiles, setActiveTabId } from "../app/features/fileTreeSlice";
 
 interface IProps{
 fileTree: IFileTree
@@ -54,6 +54,7 @@ const RecusiveComponent = ({fileTree}: IProps ) => {
         <div key={idx} onClick={()=> {
           if (!item.isFolder && !openedFiles.find(file => file.id === item.id)) {
             dispatch(setOpenFiles([...openedFiles, item]))
+            dispatch(setActiveTabId(item.id))
           }
         }}>
         <RecusiveComponent  fileTree={item} />
