@@ -1,5 +1,6 @@
 import OpendFileBar from "./components/OpendFileBar";
 import RecusiveComponent from "./components/RecusiveComponent";
+import ResizeablePanel from "./components/ResizeablePanel";
 import { fileTree } from "./data/fileTree";
 
 function App() {
@@ -7,13 +8,17 @@ function App() {
 return (
     <>
     <div className="flex h-screen">
+    <ResizeablePanel leftPanel = {
 
-      <div style={{border:"3px solid white"}} >
+      <div className="h-screen" style={{border:"3px solid white"}} >
         <RecusiveComponent fileTree={fileTree} />
       </div>
-      <div className=" flex  flex-1 p-2">
+      } RightPanel = {
+
+        <div className=" flex  flex-1 p-2">
         <OpendFileBar />
       </div>
+      }/>
     </div>
     </>
   )
