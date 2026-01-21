@@ -11,7 +11,7 @@ interface IProps{
 const ResizeablePanel = ( {leftPanel,RightPanel} : IProps) => {
     return (
 <Group className="h-screen">
-  <Panel collapsible  minSize={280} maxSize={400} className="w-30">{leftPanel}</Panel>
+  <Panel collapsible  minSize={280} maxSize={300} className="w-30">{leftPanel}</Panel>
     <Separator />
   <Panel className="w-20">{RightPanel}</Panel>
 </Group>    );
