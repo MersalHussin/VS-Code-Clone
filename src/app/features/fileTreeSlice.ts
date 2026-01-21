@@ -11,6 +11,7 @@ interface IClickedFile{
 interface IinitialState{
     openedFiles : IFileTree[]
     clickedFile: IClickedFile
+    hoveredFileId: string | null
 }
 
 
@@ -21,7 +22,8 @@ const initialState:IinitialState = {
         filename :"",
         fileContent:""
 
-    }
+    },
+    hoveredFileId: null
 }
 const fileTreeSlice = createSlice({
     name:"fileTree",
@@ -33,9 +35,12 @@ const fileTreeSlice = createSlice({
         setOpendClickedFile:(state, action:PayloadAction<IClickedFile>) => {
             state.clickedFile = action.payload;
         },
+        setHoveredFileId:(state, action:PayloadAction<string | null>) => {
+            state.hoveredFileId = action.payload;
+        },
     }
 })
 
-export const  {setOpenFiles , setOpendClickedFile} = fileTreeSlice.actions
+export const  {setOpenFiles , setOpendClickedFile, setHoveredFileId} = fileTreeSlice.actions
 
 export default fileTreeSlice.reducer;

@@ -1,55 +1,73 @@
 import { useEffect, useRef } from "react";
-import { useDispatch} from "react-redux";
-// import type { RootState } from "../../app/store";
-import { setOpenFiles } from "../../app/features/fileTreeSlice";
+import { useDispatch, useSelector} from "react-redux";
+import type { RootState } from "../../app/store";
+import { setOpenFiles, setOpendClickedFile } from "../../app/features/fileTreeSlice";
 
 interface IProps{
 postion: {x:number, y:number}
 setShowMenu: (val:boolean) => void;
-
+fileId?: string | null;
 }
 
 
 
 
-const DropMenu = ({postion , setShowMenu}: IProps ) => {
+const DropMenu = ({postion , setShowMenu, fileId}: IProps ) => {
     const dispatch = useDispatch()
-    // const {openedFiles} = useSelector((state:RootState) => state.fileTree)
+    const {openedFiles, hoveredFileId} = useSelector((state:RootState) => state.fileTree)
+    
+    // Use hoveredFileId if available, otherwise use fileId
+    const targetFileId = hoveredFileId || fileId
     
     // Functions: 
-    const RemoveAll = () => {
-        console.log("Remove All");
-        dispatch(setOpenFiles([]))
-        
-    }
-    const menuRef = useRef<HTMLDivElement>(null)
-    // event: MouseEvent
-useEffect(()=>{
-    // if(menuRef.current && !menuRef.current.contains(event.target as Node))
-    // console.log(menuRef.current);
-    const handleClickOutside = ()=>{
-        console.log("outside");
+    const closeFile = () => {
+        if (targetFileId) {
+            const filtered = openedFiles.filter(file => file.id !== targetFileId)
+            dispatch(setOpenFiles(filtered))
+            
+            if (filtered.length > 0) {
+                const lastItem = filtered[filtered.length - 1]
+                dispatch(setOpendClickedFile({activeTabId: lastItem.id, fileContent: lastItem.content, filename: lastItem.name}))
+            } else {
+                dispatch(setOpendClickedFile({activeTabId: null, fileContent: "", filename: ""}))
+            }
+        }
         setShowMenu(false)
+    }
+    
+    const closeAll = () => {
+        dispatch(setOpenFiles([]))
+        dispatch(setOpendClickedFile({activeTabId: null, fileContent: "", filename: ""}))
+        setShowMenu(false)
+    }
+    
+    const menuRef = useRef<HTMLDivElement>(null)
+
+useEffect(()=>{
+    const handleClickOutside = (event: MouseEvent)=>{
+        if(menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setShowMenu(false)
+        }
     }
     window.addEventListener('click',handleClickOutside)
 
     return() =>{
-        window.addEventListener('click', handleClickOutside)}
+        window.removeEventListener('click', handleClickOutside)
+    }
 },[setShowMenu])
 
-    console.log(menuRef);
     return (
-        <div ref= {menuRef}>
-        <ul className="bg-white text-black" style={{position:"absolute",left:postion.x,top:postion.y }}>
-            <li className="bg-white">close</li>
-            <li className="bg-white" onClick={RemoveAll}>CloseAll</li>
+        <div ref={menuRef}>
+        <ul className="bg-[#252526] text-[#cccccc] shadow-2xl border border-[#454545] rounded-sm py-1 min-w-[180px] z-50" style={{position:"absolute",left:postion.x,top:postion.y }}>
+            <li onClick={closeFile} className="px-4 py-2 hover:bg-[#2a2d2e] cursor-pointer transition text-sm flex items-center gap-2">
+                <span>✕</span> Close
+            </li>
+            <div className="border-t border-[#454545] my-1"></div>
+            <li onClick={closeAll} className="px-4 py-2 hover:bg-[#2a2d2e] cursor-pointer transition text-sm flex items-center gap-2">
+                <span>⊗</span> Close All
+            </li>
         </ul>
         </div>
     );
 }
-
 export default DropMenu;
-
-//  ** UseEffect
-//  ** Click Event
-//  ** Menu Redf => UseRef Done

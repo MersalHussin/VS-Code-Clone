@@ -22,14 +22,10 @@ const OpendFileBar = () => {
           </div>
         ) : (
           <>
-            <div className="flex gap-3 justify-start" onContextMenu={(e) =>{
-          e.preventDefault();
-          setPostion({x:e.clientX,y:e.clientY})
-          setShowMenu(true)
-        }}>
-              {openedFiles.map((file)=> <OpendFileBarTab key={file.id} file={file} />)}
+            <div className="flex gap-3 justify-start">
+              {openedFiles.map((file)=> <OpendFileBarTab key={file.id} file={file} setShowMenu={setShowMenu} setPostion={setPostion} />)}
               {showMenu && 
-                    <DropMenu setShowMenu={setShowMenu} postion={postion}/>
+                    <DropMenu setShowMenu={setShowMenu} postion={postion} fileId={clickedFile.activeTabId}/>
                 }
 
             </div>
