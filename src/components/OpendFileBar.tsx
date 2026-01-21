@@ -29,7 +29,7 @@ const OpendFileBar = () => {
         }}>
               {openedFiles.map((file)=> <OpendFileBarTab key={file.id} file={file} />)}
               {showMenu && 
-                    <DropMenu postion={postion}/>
+                    <DropMenu setShowMenu={setShowMenu} postion={postion}/>
                 }
 
             </div>
